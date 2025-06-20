@@ -1,0 +1,1 @@
+<x-dynamic-component :component="'icons.'.$icon" class="{{ $iconClasse}}"/>
