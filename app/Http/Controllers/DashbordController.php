@@ -46,7 +46,7 @@ class DashbordController extends Controller
                             ->orderByDesc('total')
                             ->get();
 
-        return view('dashbord' , compact(
+        return view('bibliotheque' , compact(
             'nbLivreDispo' , 
             'nbLivre' , 
             'nbUsager' , 
