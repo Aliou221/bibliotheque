@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: laravel-app
+    env: docker
+    plan: free
+    repo: https://github.com/Aliou221/bibliotheque
+    branch: main
+    dockerfilePath: Dockerfile
+    buildCommand: ""
+    startCommand: ""
