@@ -35,9 +35,12 @@ RUN composer install --no-dev --optimize-autoloader
 RUN yarn install && yarn build
 
 # Étape 11 : Cache Laravel
+
 RUN php artisan config:cache \
  && php artisan route:cache \
- && php artisan view:cache
+ && php artisan view:cache \
+ && php artisan migrate --force
+
 
 # Étape 12 : Fixer les permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
