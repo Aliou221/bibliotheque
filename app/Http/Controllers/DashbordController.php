@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class DashbordController extends Controller
 {
     public function index(){
+        try {
         $nbLivreDispo = Livres::where('estDisponible', true)->count();
         $nbLivre = Livres::count();
         $nbUsager = Usagers::count();
@@ -46,7 +47,7 @@ class DashbordController extends Controller
                             ->orderByDesc('total')
                             ->get();
 
-        return view('bibliotheque' , compact(
+        return view('dashbord' , compact(
             'nbLivreDispo' , 
             'nbLivre' , 
             'nbUsager' , 
@@ -55,5 +56,8 @@ class DashbordController extends Controller
             'allEmpruntsRecent',
             'empruntPopulaires',
         ));
+        } catch (\Exception $e) {
+        return $e->getMessage() . '<br>' . nl2br($e->getTraceAsString());
+    }
     }
 }
