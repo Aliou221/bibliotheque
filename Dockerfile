@@ -35,19 +35,18 @@ RUN composer install --no-dev --optimize-autoloader
 RUN yarn install && yarn build
 
 # Étape 11 : Cache Laravel
-
 RUN php artisan config:cache \
  && php artisan route:cache \
  && php artisan view:cache \
  && php artisan migrate --force
 
-
 # Étape 12 : Fixer les permissions
 RUN chown -R www-data:www-data storage bootstrap/cache \
  && chmod -R 775 storage bootstrap/cache
 
-# Étape 13 : Exposer le port 80 pour Render
-EXPOSE 80
+# Étape 13 : Forcer Apache à écouter sur le port 10000 (Render)
+RUN sed -i 's/80/10000/g' /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf
+EXPOSE 10000
 
 # Étape 14 : Démarrer Apache
 CMD ["apache2-foreground"]

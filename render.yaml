@@ -8,3 +8,41 @@ services:
     dockerfilePath: Dockerfile
     buildCommand: ""
     startCommand: ""
+    envVars:
+      - fromGroup: mysql
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        value: base64:A97Jjn6w1mc/tJYQtJN7J2fOCE5ar3W3IEZcoRfONnE=  # ⚠️ Mets ici une vraie clé (php artisan key:generate --show)
+      - key: APP_URL
+        value: https://bibliotheque-q9u6.onrender.com
+      - key: DB_HOST
+        value: mysql-db
+      - key: DB_PORT
+        value: 3306
+
+  - type: pserv
+    name: mysql-db
+    env: docker
+    plan: standard
+    autoDeploy: false
+    disk:
+      name: mysql-data
+      mountPath: /var/lib/mysql
+      sizeGB: 10
+    envVars:
+      - fromGroup: mysql
+
+envVarGroups:
+  - name: mysql
+    envVars:
+      - key: MYSQL_DATABASE
+        value: laravel
+      - key: MYSQL_USER
+        value: laravel
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true
